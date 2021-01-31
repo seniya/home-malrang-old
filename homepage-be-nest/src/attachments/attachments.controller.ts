@@ -11,7 +11,7 @@ import { AttachmentsService } from './attachments.service';
 import FileNotFoundException from './exceptions/fileNotFound.exception';
 import { EUploadType } from './dto/createFile.dto';
 
-@Controller('attachments')
+@Controller('api/attachments')
 export class AttachmentsController {
   constructor(private readonly attachmentsService: AttachmentsService) {}
 

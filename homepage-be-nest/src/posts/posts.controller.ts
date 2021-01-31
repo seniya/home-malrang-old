@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../authentication/guards/jwt.auth.guard';
 import RequestWithUserIf from '../authentication/interface/requestWithUser.interface';
 import FindOneParams from '../utils/findOneParams';
@@ -7,7 +7,7 @@ import UpdatePostDto from './dto/updatePost.dto';
 import { PostsService } from './posts.service';
 import { ResponseJson } from '../utils/responseJson';
 
-@Controller('posts')
+@Controller('api/posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 

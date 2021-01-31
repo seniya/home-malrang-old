@@ -6,7 +6,7 @@ import { LocalAuthGuard } from './guards/local.auth.guard';
 import RequestWithUserIf from './interface/requestWithUser.interface';
 import { ResponseJson } from '../utils/responseJson';
 
-@Controller('authentication')
+@Controller('api/authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 

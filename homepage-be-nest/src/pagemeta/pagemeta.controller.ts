@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { PagemetaService } from './pagemeta.service';
 
-@Controller('pagemeta')
+@Controller('api/pagemeta')
 export class PagemetaController {
   constructor(private readonly pagemetaService: PagemetaService) {}
 
