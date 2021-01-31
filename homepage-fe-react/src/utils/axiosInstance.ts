@@ -28,7 +28,8 @@ export function setInterceptors(instance: AxiosInstance) {
   return instance;
 }
 
-const apiRootPath = 'http://localhost:3000';
+// const apiRootPath = 'http://localhost:3000';
+const apiRootPath = '/api';
 
 function createInstance() {
   const instance: AxiosInstance = axios.create({
