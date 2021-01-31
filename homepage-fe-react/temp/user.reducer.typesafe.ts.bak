@@ -1,0 +1,150 @@
+import { AxiosError } from 'axios';
+import { combineReducers } from 'redux';
+import { ActionType, createReducer, createAsyncAction } from 'typesafe-actions';
+import {
+  ISigninRequest,
+  ISigninResponse,
+  IUser,
+  IGetUserRequest,
+  IGetUserResponse,
+} from './user.interface';
+
+export const SIGN_IN = {
+  REQUEST: 'SIGN_IN_REQUEST',
+  SUCCESS: 'SIGN_IN_SUCCESS',
+  FAILURE: 'SIGN_IN_FAILURE',
+};
+
+export const GET_USER = {
+  REQUEST: 'GET_USER_REQUEST',
+  SUCCESS: 'GET_USER_SUCCESS',
+  FAILURE: 'GET_USER_FAILURE',
+};
+
+export const signInAction = createAsyncAction(SIGN_IN.REQUEST, SIGN_IN.SUCCESS, SIGN_IN.FAILURE)<
+  ISigninRequest,
+  ISigninResponse,
+  AxiosError
+>();
+
+export const getUserAction = createAsyncAction(
+  GET_USER.REQUEST,
+  GET_USER.SUCCESS,
+  GET_USER.FAILURE,
+)<IGetUserRequest, IGetUserResponse, AxiosError>();
+
+const actions = {
+  signInAction,
+};
+
+const actions2 = {
+  getUserAction,
+};
+
+type Actions = ActionType<typeof actions>;
+type Actions2 = ActionType<typeof actions2>;
+
+type State = {
+  isLoading: boolean;
+  isDone: boolean;
+  error: string | null;
+  user: IUser;
+  token: string | null;
+};
+
+const defaultUser = {
+  id: null,
+  email: '',
+  name: '손님',
+  lv: 3,
+  photo: '',
+};
+
+const initialState: State = {
+  isLoading: false,
+  isDone: false,
+  error: null,
+  user: defaultUser,
+  token: null,
+};
+
+const initialState2: State = {
+  isLoading: false,
+  isDone: false,
+  error: null,
+  user: defaultUser,
+  token: null,
+};
+
+const getUser = createReducer<State, Actions2>(initialState2)
+  .handleAction(getUserAction.request, (state) => {
+    console.log('getUserAction.request : ');
+    return {
+      ...state,
+      isLoading: true,
+      isDone: false,
+    };
+  })
+  .handleAction(getUserAction.success, (state, action) => {
+    console.log('getUserAction.success : ', action);
+    const { user, token } = action.payload.data;
+    return {
+      ...state,
+      isLoading: false,
+      isDone: true,
+      error: null,
+      user,
+      token,
+    };
+  })
+  .handleAction(getUserAction.failure, (state, action) => {
+    console.log('getUserAction.failure : ', action);
+    return {
+      ...state,
+      isLoading: false,
+      isDone: false,
+      error: action.payload.message,
+      user: defaultUser,
+      token: null,
+    };
+  });
+
+const signin = createReducer<State, Actions>(initialState)
+  .handleAction(signInAction.request, (state) => {
+    console.log('signInAction.request : ');
+    return {
+      ...state,
+      isLoading: true,
+      isDone: false,
+    };
+  })
+  .handleAction(signInAction.success, (state, action) => {
+    console.log('signInAction.success : ', action);
+    const { user, token } = action.payload.data;
+    return {
+      ...state,
+      isLoading: false,
+      isDone: true,
+      error: null,
+      user,
+      token,
+    };
+  })
+  .handleAction(signInAction.failure, (state, action) => {
+    console.log('signInAction.failure : ', action);
+    return {
+      ...state,
+      isLoading: false,
+      isDone: false,
+      error: action.payload.message,
+      user: defaultUser,
+      token: null,
+    };
+  });
+
+const reducer = combineReducers({
+  getUser,
+  signin,
+});
+
+export default reducer;

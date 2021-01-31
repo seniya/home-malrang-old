@@ -1,0 +1,154 @@
+import { AxiosError } from 'axios';
+import { AnyAction, combineReducers } from 'redux';
+import { ActionType, createAsyncAction } from 'typesafe-actions';
+import {
+  ISigninRequest,
+  ISigninResponse,
+  IGetUserRequest,
+  IGetUserResponse,
+  IUser,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_FAILURE,
+} from './user.interface';
+
+export const SIGN_IN = {
+  REQUEST: 'SIGN_IN_REQUEST',
+  SUCCESS: 'SIGN_IN_SUCCESS',
+  FAILURE: 'SIGN_IN_FAILURE',
+};
+
+export const GET_USER = {
+  REQUEST: 'GET_USER_REQUEST',
+  SUCCESS: 'GET_USER_SUCCESS',
+  FAILURE: 'GET_USER_FAILURE',
+};
+
+export const signInAction = createAsyncAction(SIGN_IN.REQUEST, SIGN_IN.SUCCESS, SIGN_IN.FAILURE)<
+  ISigninRequest,
+  ISigninResponse,
+  AxiosError
+>();
+
+export const getUserAction = createAsyncAction(
+  GET_USER.REQUEST,
+  GET_USER.SUCCESS,
+  GET_USER.FAILURE,
+)<IGetUserRequest, IGetUserResponse, AxiosError>();
+
+const actions = {
+  signInAction,
+  getUserAction,
+};
+
+// type Actions = ActionType<typeof actions>;
+
+const defaultUser = {
+  id: null,
+  email: '',
+  name: '손님',
+  lv: 3,
+  photo: '',
+};
+
+type TgetUserState = {
+  isLoading: boolean;
+  isDone: boolean;
+  error: string | null;
+  user: IUser;
+  token: string | null;
+};
+
+const getUserinitialState: TgetUserState = {
+  isLoading: false,
+  isDone: false,
+  error: null,
+  user: defaultUser,
+  token: null,
+};
+
+const getUser = (state: TgetUserState = getUserinitialState, action: AnyAction) => {
+  switch (action.type) {
+    case GET_USER_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        isDone: false,
+      };
+    case GET_USER_SUCCESS:
+      const { user, token } = action.payload.data;
+      return {
+        ...state,
+        isLoading: false,
+        isDone: true,
+        error: null,
+        user,
+        token,
+      };
+    case GET_USER_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        isDone: false,
+        error: action.payload.message,
+        user: defaultUser,
+        token: null,
+      };
+    default:
+      return state;
+  }
+};
+
+type TSigninState = {
+  isLoading: boolean;
+  isDone: boolean;
+  error: string | null;
+  user: IUser;
+  token: string | null;
+};
+
+const signininitialState: TSigninState = {
+  isLoading: false,
+  isDone: false,
+  error: null,
+  user: defaultUser,
+  token: null,
+};
+
+const signin = (state: TSigninState = signininitialState, action: AnyAction) => {
+  switch (action.type) {
+    case signInAction.request:
+      return {
+        ...state,
+        isLoading: true,
+        isDone: false,
+      };
+    case signInAction.success:
+      const { user, token } = action.payload.data;
+      return {
+        ...state,
+        isLoading: false,
+        isDone: true,
+        error: null,
+        user,
+        token,
+      };
+    case signInAction.failure:
+      return {
+        ...state,
+        isLoading: false,
+        isDone: false,
+        error: action.payload.message,
+        user: defaultUser,
+        token: null,
+      };
+    default:
+      return state;
+  }
+};
+const reducer = combineReducers({
+  getUser,
+  signin,
+});
+
+export default reducer;
