@@ -6,19 +6,38 @@ body {
   color: $primary-color;
 }
 
+
 .logo {
-  height: 32px;
+  // width: 200px;
+  height: 31px;
   background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
-  color: #cccccc;
-  padding: 6px;
-  position: relative;
+  margin: 16px 0px 16px 0;
+  line-height: 32px;
+  padding-left: 15px;
+  padding-right: 5px;
+  float: right;
+
+  span {
+    color: #fff;
+  }
+
+  .site-layout-sub-header-background-sign-btn {
+    float: right;
+  }
 }
 
-.site-layout-sub-header-background {
+.site-layout {
   background: #fff;
 }
 
-.site-layout-background {
+.site-layout-main-content {
+  border: 1px solid #cccccc;
+}
+
+.site-layout .site-layout-background {
   background: #fff;
+}
+
+[data-theme="dark"] .site-layout .site-layout-background {
+  background: #141414;
 }

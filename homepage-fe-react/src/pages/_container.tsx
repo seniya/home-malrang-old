@@ -1,6 +1,6 @@
 import { Switch, Route, Link, useLocation } from 'react-router-dom';
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { Button, Layout, Menu, Tooltip } from 'antd';
+import { Breadcrumb, Button, Layout, Menu, Tooltip } from 'antd';
 import {
   HomeOutlined,
   CoffeeOutlined,
@@ -11,6 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/configureStore';
 import userModule from '../store/modules/user';
+import Breadcrumbs from './components/breadcrumb';
 
 const Home = lazy(() => import('./home'));
 const About = lazy(() => import('./about'));
@@ -93,7 +94,7 @@ function Container() {
 
   const renderBtnLogout = () => {
     return (
-      <div style={{ position: 'absolute', right: '3px', top: '3px' }}>
+      <div className="site-layout-sub-header-background-sign-btn">
         <Tooltip title="sign-out">
           <Button
             type="link"
@@ -109,14 +110,19 @@ function Container() {
 
   return (
     <>
-      <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-          <div className="logo">
-            <span>Hello. </span>
-            {<span>{token ? `${user.name} 님` : '손님'}</span>}
-            {token ? renderBtnLogout() : ''}
-          </div>
-          <Menu theme="dark" mode="inline" selectedKeys={[location.pathname]}>
+      <Layout className="site-layout">
+        <Header
+          className="site-layout-sub-header-background"
+          style={{ position: 'fixed', zIndex: 1, width: '100%' }}
+        >
+          {
+            <div className="logo">
+              <span>Hello. </span>
+              {<span>{token ? `${user.name} 님` : '손님'}</span>}
+              {token ? renderBtnLogout() : ''}
+            </div>
+          }
+          <Menu theme="dark" mode="horizontal" selectedKeys={[location.pathname]}>
             <Menu.Item key="/" icon={<HomeOutlined style={{ fontSize: '18px' }} />}>
               <Link to="/">Home</Link>
             </Menu.Item>
@@ -137,25 +143,28 @@ function Container() {
               <Menu.Item key="8">Team 2</Menu.Item>
             </SubMenu>
           </Menu>
-        </Sider>
-        <Layout>
-          <Header className="site-layout-sub-header-background" style={{ padding: 0 }} />
-          <Content style={{ margin: '24px 16px 0' }}>
-            <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-              <div>메인 컨테이너</div>
-              <Suspense fallback={<div>Loading...</div>}>
-                <Switch>
-                  <Route exact path="/" component={Home} />
-                  <Route path="/about" component={About} />
-                  <Route path="/blogs" component={Blog} />
-                  <Route path="/sign-up" component={SignUp} />
-                  <Route path="/sign-in" component={SignIn} />
-                </Switch>
-              </Suspense>
-            </div>
-          </Content>
-          <Footer style={{ textAlign: 'center' }}>Malrang</Footer>
-        </Layout>
+        </Header>
+        <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
+          <Breadcrumbs />
+          <div
+            className="site-layout-main-content site-layout-background"
+            style={{ padding: 24, minHeight: 360 }}
+          >
+            {/* <div>메인 컨테이너</div> */}
+            <Suspense fallback={<div>Loading...</div>}>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/about" component={About} />
+                <Route path="/blogs" component={Blog} />
+                <Route path="/sign-up" component={SignUp} />
+                <Route path="/sign-in" component={SignIn} />
+              </Switch>
+            </Suspense>
+          </div>
+        </Content>
+        <Footer className="site-layout" style={{ textAlign: 'center' }}>
+          Made By Malrang
+        </Footer>
       </Layout>
       ,
     </>
