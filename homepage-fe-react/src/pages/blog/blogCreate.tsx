@@ -130,7 +130,6 @@ function BlogCreate() {
       >
         <Card
           title="블로그 작성"
-          extra={<a href="#">Cancel</a>}
           style={{ width: '100%' }}
           actions={[
             <Button type="primary" htmlType="submit" loading={isLoadingAddPost}>

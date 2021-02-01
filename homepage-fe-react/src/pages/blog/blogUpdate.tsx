@@ -179,9 +179,6 @@ function BlogUpdate() {
 
   return (
     <>
-      블로그 수정
-      <div>url : {url}</div>
-      <div>id : {id}</div>
       {isDoneReadPost && content ? (
         <Form
           labelCol={{ span: 6 }}
@@ -191,8 +188,7 @@ function BlogUpdate() {
           onFinishFailed={onFinishFailed}
         >
           <Card
-            title="블로그 작성"
-            extra={<a href="#">Cancel</a>}
+            title="블로그 수정"
             style={{ width: '100%' }}
             actions={[
               <Button type="primary" htmlType="submit" loading={isLoadingUpdatePost}>

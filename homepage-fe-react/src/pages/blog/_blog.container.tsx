@@ -1,5 +1,6 @@
 import { lazy } from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import BlogPageHeader from './components/blogPageHeader';
 
 const BlogList = lazy(() => import('./blogList'));
 const BlogCreate = lazy(() => import('./blogCreate'));
@@ -9,12 +10,7 @@ const BlogRead = lazy(() => import('./blogRead'));
 function Blog() {
   return (
     <>
-      <div>블로그 컨테이너</div>
-      <div>
-        <Link to={`/blogs`}>리스트</Link>
-        &nbsp;&nbsp;
-        <Link to={`/blogs/create`}>작성</Link>
-      </div>
+      {BlogPageHeader()}
       <div>
         <Switch>
           <Route exact path="/blogs" component={BlogList} />

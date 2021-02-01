@@ -14,6 +14,7 @@ import Quote from '@editorjs/quote';
 import Table from '@editorjs/table';
 import Warning from '@editorjs/warning';
 import Attaches from './editorjsAttaches';
+import CodeBox from './editorjsCodeBox';
 // import Attaches from '@editorjs/attaches';
 // import InlineImage from 'editorjs-inline-image';
 
@@ -107,6 +108,15 @@ const Editor = (props) => {
                 : process.env.REACT_APP_API_URL_PROD
             }/attachments/file`,
             field: 'file',
+          },
+        },
+        codeBox: {
+          class: CodeBox,
+          config: {
+            themeURL:
+              'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/dracula.min.css', // Optional
+            themeName: 'atom-one-dark', // Optional
+            useDefaultTheme: 'light', // Optional. This also determines the background color of the language select drop-down
           },
         },
       },

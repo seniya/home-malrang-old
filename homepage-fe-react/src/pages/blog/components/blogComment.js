@@ -1,3 +1,4 @@
+import { Divider } from 'antd';
 import { useEffect, useRef } from 'react';
 
 function blogComment() {
@@ -23,7 +24,7 @@ function blogComment() {
 
   return (
     <>
-      <div>commentsBlock</div>
+      <Divider />
       <div ref={commentsElem}></div>
     </>
   );

@@ -24,6 +24,16 @@ function Breadcrumbs() {
           <Breadcrumb.Item>About</Breadcrumb.Item>
         </>
       );
+    } else if (pathname.indexOf('/blogs/read') > -1) {
+      const pathnameSplit = pathname.split('/');
+      const id = pathnameSplit[pathnameSplit.length - 1];
+      return (
+        <>
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>Blog</Breadcrumb.Item>
+          <Breadcrumb.Item>{id}</Breadcrumb.Item>
+        </>
+      );
     }
   };
 

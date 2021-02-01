@@ -113,7 +113,7 @@ function Container() {
       <Layout className="site-layout">
         <Header
           className="site-layout-sub-header-background"
-          style={{ position: 'fixed', zIndex: 1, width: '100%' }}
+          style={{ position: 'fixed', zIndex: 999, width: '100%' }}
         >
           {
             <div className="logo">
