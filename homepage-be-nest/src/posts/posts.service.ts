@@ -16,7 +16,7 @@ export class PostsService {
 
   getAllPosts() {
     return this.postsRepository.find({
-      relations: ['author', 'categories'],
+      relations: ['author', 'categories', 'attachment'],
       order: {
         id: 'DESC',
       },
