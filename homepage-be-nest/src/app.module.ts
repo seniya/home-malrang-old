@@ -25,7 +25,7 @@ import { EmployeesModule } from './employees/employees.module';
         FILE_SIZE: Joi.number().required(),
         IMAGE_SIZE: Joi.number().required(),
       }),
-      envFilePath: process.env.NODE_ENV === 'pord' ? '.env.prod' : '.env.dev',
+      envFilePath: '.env',
       isGlobal: true,
     }),
     DatabaseModule,
