@@ -7,8 +7,9 @@
   "license": "UNLICENSED",
   "scripts": {
     "serve": "set NODE_ENV=dev && npm run start:dev",
-    "build:prod": "export NODE_ENV=prod && nest build && node dist/main",
-    "prebuild": "rimraf dist",    
+    "build:prod": "export NODE_ENV=prod && npm run build",
+    "prebuild": "rimraf dist",
+    "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
