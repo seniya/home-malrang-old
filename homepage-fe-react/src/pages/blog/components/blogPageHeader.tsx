@@ -15,7 +15,10 @@ function BlogPageHeader() {
   const renderPageHeader = () => {
     const dispatch = useDispatch();
     const postState = useSelector((store: RootState) => store.post.postReducer);
+    const userState = useSelector((store: RootState) => store.user.userReducer);
     const { isDoneRemovePost, errorRemovePost } = postState;
+    const { token } = userState;
+    console.log('BlogPageHeader token : ', token);
 
     const reqRemovePost = (id: string) => {
       dispatch(postModule.actions.REMOVE_POST_REQUEST(id));
@@ -59,7 +62,7 @@ function BlogPageHeader() {
           title="Blog"
           subTitle="목록 페이지"
           extra={[
-            <Button key="/blogs/create" type="primary">
+            <Button key="/blogs/create" type="primary" disabled={!token}>
               <Link to={`/blogs/create`}>작성</Link>
             </Button>,
           ]}
@@ -91,10 +94,16 @@ function BlogPageHeader() {
               <Button key="/blogs">
                 <Link to={`/blogs`}>리스트</Link>
               </Button>,
-              <Button key="/blogs/update" type="primary">
+              <Button key="/blogs/update" type="primary" disabled={!token}>
                 <Link to={`/blogs/update/${id}`}>수정</Link>
               </Button>,
-              <Button key="/blogs/delete" type="primary" danger onClick={showModal}>
+              <Button
+                key="/blogs/delete"
+                type="primary"
+                danger
+                onClick={showModal}
+                disabled={!token}
+              >
                 삭제
               </Button>,
             ]}

@@ -1,5 +1,11 @@
+import HomeCal from './components/homeCal';
+
 function Home() {
-  return <div>Home 이다</div>;
+  return (
+    <div>
+      <HomeCal />
+    </div>
+  );
 }
 
 export default Home;

@@ -1,6 +1,6 @@
 import { Switch, Route, Link, useLocation } from 'react-router-dom';
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { Breadcrumb, Button, Layout, Menu, Tooltip } from 'antd';
+import { Button, Layout, Menu, Tooltip } from 'antd';
 import {
   HomeOutlined,
   CoffeeOutlined,
@@ -19,54 +19,7 @@ const SignIn = lazy(() => import('./signin'));
 const Blog = lazy(() => import('./blog/_blog.container'));
 const SignUp = lazy(() => import('./signup'));
 
-/*
-const routes = [
-  {
-    path: '/',
-    component: Home,
-  },
-  {
-    path: '/about',
-    component: About,
-  },
-  {
-    path: '/sign-up',
-    component: SignUp,
-  },
-  {
-    path: '/sign-in',
-    component: SignIn,
-  },
-  {
-    path: '/blog',
-    component: Blog,
-    routes: [
-      {
-        path: '/blog/1',
-        component: Blog,
-      },
-      {
-        path: '/blog/2',
-        component: Blog,
-      },
-    ],
-  },
-];
-
-function RouteWithSubRoutes(route) {
-  return (
-    <Route
-      path={route.path}
-      render={(props) => (
-        // pass the sub-routes down to keep nesting
-        <route.component {...props} routes={route.routes} />
-      )}
-    />
-  );
-}
-*/
-
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
 const { SubMenu } = Menu;
 
 function Container() {
@@ -83,11 +36,6 @@ function Container() {
   const { user, token } = userState;
 
   const location = useLocation();
-  const [collapsed, setCollapsed] = useState<boolean>(false);
-  const onCollapse = (collapsed_: boolean) => {
-    setCollapsed(collapsed_);
-  };
-
   const onClickBtnSignout = () => {
     dispatch(userModule.actions.SIGN_OUT());
   };
@@ -140,7 +88,6 @@ function Container() {
               <Menu.Item key="/sign-in">
                 <Link to="/sign-in">sign-in</Link>
               </Menu.Item>
-              <Menu.Item key="8">Team 2</Menu.Item>
             </SubMenu>
           </Menu>
         </Header>

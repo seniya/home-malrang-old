@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/configureStore';
-import postModule from '../store/modules/post';
+import { Image } from 'antd';
+import homepageImage from '../assets/images/homepage.png';
 
 function About() {
   return (
     <>
-      <div>어바웃</div>
+      <div style={{ textAlign: 'center' }}>
+        <Image src={homepageImage} />
+      </div>
       <div></div>
     </>
   );

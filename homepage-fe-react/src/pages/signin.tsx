@@ -6,7 +6,7 @@ import { RootState } from '../store/configureStore';
 import userModule from '../store/modules/user';
 
 const layout = {
-  labelCol: { span: 8 },
+  labelCol: { span: 4 },
   wrapperCol: { span: 16 },
 };
 const tailLayout = {
@@ -18,9 +18,8 @@ function SignIn() {
   const dispatch = useDispatch();
 
   const userState = useSelector((store: RootState) => store.user.userReducer);
-
-  // const userState = useSelector((store: RootState) => store.user.signin);
-  const { isLoading, isDone: isSigninDone, error: isSigninError, user, token } = userState;
+  //const { isLoading, isDone: isSigninDone, error: isSigninError, user, token } = userState;
+  const { isLoading, token } = userState;
 
   const fetchSignin = (values: any) => {
     // console.log('fetchSignin signinSlice : ', signinSlice);
@@ -55,14 +54,15 @@ function SignIn() {
   // const isLoading = false;
   return (
     <>
-      <div>
-        {/* */}
+      {/* 
+      <div>        
         <p>isLoading: {isLoading ? 'true' : 'false'}</p>
         <p>isDone: {isSigninDone ? 'true' : 'false'}</p>
         <p>error: {isSigninError}</p>
         <p>name: {user.name}</p>
         <p>token: {token}</p>
       </div>
+      */}
       <Form
         {...layout}
         name="basic"
