@@ -18,6 +18,7 @@ const About = lazy(() => import('./about'));
 const SignIn = lazy(() => import('./signin'));
 const Blog = lazy(() => import('./blog/_blog.container'));
 const SignUp = lazy(() => import('./signup'));
+const Toys = lazy(() => import('./toys'));
 
 const { Header, Content, Footer } = Layout;
 const { SubMenu } = Menu;
@@ -77,6 +78,9 @@ function Container() {
             <Menu.Item key="/blogs" icon={<CoffeeOutlined style={{ fontSize: '18px' }} />}>
               <Link to="/blogs">Blog</Link>
             </Menu.Item>
+            <Menu.Item key="/toys" icon={<CoffeeOutlined style={{ fontSize: '18px' }} />}>
+              <Link to="/toys">Toys</Link>
+            </Menu.Item>
             <Menu.Item key="/about" icon={<BulbOutlined style={{ fontSize: '18px' }} />}>
               <Link to="/about">About</Link>
             </Menu.Item>
@@ -103,6 +107,7 @@ function Container() {
                 <Route exact path="/" component={Home} />
                 <Route path="/about" component={About} />
                 <Route path="/blogs" component={Blog} />
+                <Route path="/toys" component={Toys} />
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/sign-in" component={SignIn} />
               </Switch>
