@@ -146,3 +146,5 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 
+# sqlite3
+/.db

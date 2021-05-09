@@ -1,7 +1,10 @@
 import { Module } from 'vuex'
 import { RootState } from '../index'
 import { IUser } from '../../api/user.interface'
-import { apiSignin } from '../../api/user.api'
+import {
+  apiSignin,
+  apiGetUser
+} from '../../api/user.api'
 
 const defaultUser = {
   id: null,
@@ -12,13 +15,15 @@ const defaultUser = {
 }
 
 export interface ModuleAuthState {
-  user: IUser;
+  user: IUser
+  token: String
 }
 
 export const moduleAuth: Module<ModuleAuthState, RootState> = {
   namespaced: true,
   state: () => ({
-    user: defaultUser
+    user: defaultUser,
+    token: ''
   }),
   getters: {
     userInfo (state, getters, rootState) {
@@ -27,16 +32,36 @@ export const moduleAuth: Module<ModuleAuthState, RootState> = {
   },
   mutations: {
     setUser (state, payload) {
-      console.log('setUser payload.user : ', payload.user)
-      state.user = payload.user
+      // console.log('setUser payload : ', payload)
+      state.user = payload
+    },
+    setToken (state, payload: string) {
+      // console.log('setToken payload : ', payload)
+      state.token = payload
     }
   },
   actions: {
     async SIGN_IN ({ state, commit, rootState }, payload) {
-      const { data } = await apiSignin(payload)
-      // console.log('SIGN_IN data : ', data.user)
-      commit('setUser', data)
-      return data
+      try {
+        const { success, body } = await apiSignin(payload)
+        console.log('SIGN_IN success, body : ', success, body)
+        localStorage.setItem('MALRANG_TOKEN', body)
+        commit('setToken', body)
+        return true
+      } catch (error) {
+        return false
+      }
+    },
+
+    async GET_ME ({ state, commit, rootState }, payload) {
+      try {
+        const { success, body } = await apiGetUser()
+        console.log('SIGN_IN success, body : ', success, body)
+        commit('setUser', body)
+        return true
+      } catch (error) {
+        return false
+      }
     }
   }
 }

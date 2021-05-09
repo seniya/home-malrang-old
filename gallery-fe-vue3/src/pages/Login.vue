@@ -111,7 +111,7 @@ export default defineComponent({
     const showMessage = ref(false)
     const v$ = useVuelidate(rules, state)
 
-    const handleSubmit = (isFormValid: any) => {
+    const handleSubmit = async (isFormValid: any) => {
       submitted.value = true
       if (!isFormValid) {
         return
@@ -120,9 +120,17 @@ export default defineComponent({
         email: state.email,
         password: state.password
       }
-      store.dispatch('moduleAuth/SIGN_IN', payload)
-
-      toggleDialog()
+      try {
+        // eslint-disable-next-line no-unused-vars
+        const resultCondition1 = await store.dispatch('moduleAuth/SIGN_IN', payload)
+        const resultCondition = await store.dispatch('moduleAuth/GET_ME', {})
+        console.log('resultCondition : ', resultCondition)
+        if (resultCondition) {
+          toggleDialog()
+        }
+      } catch (error) {
+        alert('Login error')
+      }
     }
     const toggleDialog = () => {
       showMessage.value = !showMessage.value

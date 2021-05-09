@@ -18,13 +18,17 @@ export default defineComponent({
   name: 'Container',
 
   setup () {
+    // eslint-disable-next-line no-unused-vars
     const store = useStore()
     const router = useRouter()
 
-    onMounted(() => {
-      console.log('component mounted', router, store)
+    onMounted(async () => {
+      // console.log('component mounted', router, store)
       if (localStorage.getItem('MALRANG_TOKEN') === null) {
         router.push('/login')
+      } else {
+        const resultCondition = await store.dispatch('moduleAuth/GET_ME', {})
+        console.log('resultCondition : ', resultCondition)
       }
     })
   }

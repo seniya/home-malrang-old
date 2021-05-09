@@ -5,24 +5,25 @@ import { IUserRequest } from './user.interface'
 export async function apiSignin (payload: IUserRequest) {
   const response: AxiosResponse = await axiosInstance({
     method: 'POST',
-    url: '/authentication/sign-in',
+    url: '/sign/in',
     data: payload
   })
-  if (response.data?.result?.code === 'RS0000') {
+  if (response.data?.success === true) {
     return response.data
   } else {
-    throw new Error(response.data?.result?.message)
+    throw new Error(response.data?.msg)
   }
 }
 
 export async function apiGetUser () {
   const response: AxiosResponse = await axiosInstance({
     method: 'GET',
-    url: '/authentication/get-me'
+    url: '/member/get-me'
   })
-  if (response.data?.result?.code === 'RS0000') {
+  console.log('response.data: ', response.data)
+  if (response.data?.success === true) {
     return response.data
   } else {
-    throw new Error(response.data?.result?.message)
+    throw new Error(response.data?.msg)
   }
 }
