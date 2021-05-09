@@ -19,6 +19,8 @@ export function setInterceptors (instance: AxiosInstance) {
       if (response.data?.token) {
         // console.log('response.data?.token : ', response.data?.token)
         localStorage.setItem('MALRANG_TOKEN', response.data?.token)
+      } else {
+        localStorage.removeItem('MALRANG_TOKEN')
       }
       return response
     },
