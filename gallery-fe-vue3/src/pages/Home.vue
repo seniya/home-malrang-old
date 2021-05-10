@@ -7,14 +7,28 @@
     <Divider />
     <InputText />
     <Dialog />
+
+<!-- :customUpload="true" @uploader="myUploader" -->
+    <FileUpload
+      name="uploadFiles"
+      url="/api/file/upload"
+      @before-upload="beforeUpload"
+      @before-send="beforeSend"
+      @upload="onUploaded"
+      :withCredentials="true"
+      :multiple="true"
+      accept="image/*"
+      :maxFileSize="1000000">
+      <template #empty>
+        <p>Drag and drop files to here to upload.</p>
+      </template>
+    </FileUpload>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
-
-import { email, required } from '@vuelidate/validators'
-import { useVuelidate } from '@vuelidate/core'
+import { defineComponent } from 'vue'
+import { useToast } from 'primevue/usetoast'
 
 import Button from 'primevue/button'
 import Checkbox from 'primevue/checkbox'
@@ -22,6 +36,8 @@ import Password from 'primevue/password'
 import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
 import Dialog from 'primevue/dialog'
+import FileUpload from 'primevue/fileupload'
+import { apiFileUpload } from '../api/file.api'
 
 export default defineComponent({
   name: 'Home',
@@ -31,56 +47,33 @@ export default defineComponent({
     Password,
     Divider,
     InputText,
-    Dialog
+    Dialog,
+    FileUpload
   },
 
   setup () {
-    const state = reactive({
-      name: '',
-      email: '',
-      password: '',
-      accept: null
-    })
-    const rules = {
-      name: { required },
-      email: { required, email },
-      password: { required },
-      accept: { required }
+    const toast = useToast()
+    const beforeUpload = (event:any) => {
+      console.log('beforeUpload', event)
+    }
+    const beforeSend = (event:any) => {
+      console.log('beforeSend', event)
     }
 
-    const submitted = ref(false)
-    const countries = ref()
-    const showMessage = ref(false)
-    const date = ref()
-    const country = ref()
-
-    const v$ = useVuelidate(rules, state)
-
-    const handleSubmit = (isFormValid: any) => {
-      submitted.value = true
-
-      if (!isFormValid) {
-        return
-      }
-
-      toggleDialog()
+    const onUploaded = () => {
+      toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 })
     }
-    const toggleDialog = () => {
-      showMessage.value = !showMessage.value
+    const myUploader = async (event:any) => {
+      const formData = new FormData()
+      formData.append('image', event.files[0])
 
-      if (!showMessage.value) {
-        resetForm()
-      }
-    }
-    const resetForm = () => {
-      state.name = ''
-      state.email = ''
-      state.password = ''
-      state.accept = null
-      submitted.value = false
+      await apiFileUpload(formData)
+      console.log('myUploader', event)
+
+      return event
     }
 
-    return { state, v$, handleSubmit, toggleDialog, submitted, countries, showMessage, date, country }
+    return { onUploaded, myUploader, beforeUpload, beforeSend }
   }
 })
 </script>

@@ -35,8 +35,8 @@ const getToken = async (t) => {
   const vt = await verifyToken(t)
   if (vt.lv > 3) return { user: vt, token: null }
   const nt = await signToken(vt.id, vt.email, vt.lv, vt.name)
-  console.log('getToken nt : ', nt)
-  console.log('getToken vt : ', vt)
+  // console.log('getToken nt : ', nt)
+  // console.log('getToken vt : ', vt)
   return { user: vt, token: nt }
 }
 
@@ -46,7 +46,7 @@ router.use('/sign', require('./api/apiSign'))
 router.all('*', function (req, res, next) {
   getToken(req.headers.authorization) // 토큰 검사
     .then((v) => {
-      // console.log(v)
+      console.log('getToken', v)
       req.user = v.user
       req.token = v.token
       next()
@@ -55,5 +55,6 @@ router.all('*', function (req, res, next) {
 })
 
 router.use('/member', require('./api/apiMember'))
+router.use('/file', require('./api/apifile'))
 
 module.exports = router
